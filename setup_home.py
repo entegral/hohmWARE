@@ -2,7 +2,8 @@ import sqlite3
 from database import init_db, db_session
 from models import Zone, House, Resident
 
-
+#initialize the sqlalchemy/sqlite database
+init_db()
 
 ###  ask for input about the home and save into variables  ###
 numberofzones = input('How many zones would you like to setup?\n')
@@ -36,5 +37,3 @@ configfile['residents'] = residents
 configfile['zones'] = zones
 configfile.close()
 
-#initialize the sqlalchemy/sqlite database
-init_db()
