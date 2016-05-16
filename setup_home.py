@@ -1,7 +1,6 @@
-from classes2 import Zone
 import sqlite3
-from database.py import init_db
-from models.py import Zone, House
+from database import init_db, db_session
+from models import Zone, House, Resident
 
 
 
@@ -16,20 +15,20 @@ while current_zone <= numberofzones - 1:
 	zone_name = raw_input('What would you like to call zone %s ?' % (current_zone + 1))
 	gpio_input = raw_input('What pin on the raspberry pi are you connecting this zone to?\n')
 	z = Zone(zone_name,gpio_input)
+	db_session.add(z)
+	db_session.commit()
 	current_zone = current_zone + 1
+	print "'%s' zone has been added to the database.\n" % (zone_name)
 
 #  data input specific for each person in the home #
-n = 0
-while n <= numberofresidents - 1:
-	if n == 0:
-		response = raw_input("Who is the admin of the house?")
-
-		n = n + 1
-		print residents
-	else:
-		residents.append(raw_input("What is the name of roommate # %s?" % (str(n))))
-		n = n + 1
-		print residents
+current_resident = 0
+while current_resident <= numberofresidents - 1:
+	res_name = raw_input('What is the name of resident number %s ?\n' % (current_resident + 1))
+	res_email = raw_input("What is %s's email address?\n" % (res_name))
+	res_phone = raw_input("What is %s's cell phone number ?\n" % (res_name))
+	res_mac = raw_input("What is the MAC address of %s's cell phone?\n" % (res_name))
+	r = Resident(res_name, res_email, res_phone, res_mac)
+	current_resident = current_resident + 1
 
 # save data to shelf for persistence #
 configfile = shelve.open('homeconfig')
