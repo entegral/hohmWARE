@@ -1,5 +1,5 @@
 import sqlite3
-from database import init_db, db_session
+from database import init_db, addUser
 from models import Zone, House, Resident
 
 #initialize the sqlalchemy/sqlite database
@@ -15,12 +15,11 @@ current_zone = 0
 while current_zone <= int(numberofzones) - 1:
     zone_name = input('What would you like to call zone %s ?' % (current_zone + 1))
     gpio_input = input('What pin on the raspberry pi are you connecting this zone to?\n')
-    z = Zone(zone_name,gpio_input)
+    zone = Zone(zone_name,gpio_input)
     try:
-        db_session.add(z)
-        db_session.commit()
+        addZone(zone)
     except:
-        print ("Entry already in database")
+        print ("Zone is already in database")
     current_zone = current_zone + 1
     message = " '%s' zone has been added to the database.\n " % (zone_name)
     print (message)
@@ -32,6 +31,6 @@ while current_resident <= int(numberofresidents) - 1:
     res_email = input("What is %s's email address?\n" % (res_name))
     res_phone = input("What is %s's cell phone number ?\n" % (res_name))
     res_mac = input("What is the MAC address of %s's cell phone?\n" % (res_name))
-    r = Resident(res_name, res_email, res_phone, res_mac)
+    resident = Resident(res_name, res_email, res_phone, res_mac)
     current_resident = current_resident + 1
 
