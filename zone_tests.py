@@ -1,8 +1,13 @@
 
+import database
 import models
+import zone_controller
+import resident_controller
 
-def testZoneInitWorks():
-	myZone = models.Zone('Test Zone', 12)
-	assert myZone != None
+zone_controller.listAllZones()
 
-testZoneInitWorks()
+resident_controller.listAllResidents()
+
+resident_controller.updateResidentName()
+
+resident_controller.listAllResidents
