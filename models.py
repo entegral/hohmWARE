@@ -1,7 +1,7 @@
 __author__ = 'Goomba'
 #import RPi.GPIO as GPIO
 #GPIO.setmode(GPIO.BCM)
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -48,12 +48,14 @@ class Resident(Base):
     name = Column(String, unique=False)
     email = Column(String, unique=True)
     phone = Column(String, unique=True)
-    mac =  Column(String,unique=True)
+    ip = Column(String,unique=True)
+    mac = Column(String,unique=True)
 
-    def __init__(self, name, email, phone, mac):
+    def __init__(self, name, email, phone, ip, mac):
         self.name = name
         self.email = email
         self.phone = phone
+        self.ip = ip
         self.mac = mac
 
     def __repr__(self):
@@ -69,10 +71,10 @@ class House(Base):
 
     __tablename__ = 'house'
     id = Column(Integer, primary_key=True)
-    residents = Column(String, unique=False)
+    residents = Column(String, ForeignKey('residents.name'), unique=False)
     address = Column(String, unique=False)
     temperature = Column(Integer,unique=False)
-    occupied = Column(String,unique=False)
+    occupied = Column(Integer,unique=False)
 
     def __init__(self, residents, address, temperature, occupied):
         self.residents = residents

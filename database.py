@@ -29,12 +29,16 @@ def getAllZones():
     return Zone.query.all()
 
 def getFirstZone():
-    print (Zone.query.first())
     return Zone.query.first()
 
-def getZoneByName():
-    name = input('What is the name of the zone you would like?')
+def getZoneByName(name):
     return Zone.query.filter(Zone.name == name).one()
+
+def deleteZone(name):
+    q = getZoneByName(name)
+    db_session.delete(q)
+    db_session.commit()
+
 
 # Resident Database connections
 
@@ -48,7 +52,9 @@ def getAllResidents():
 def getFirstResident():
     return Resident.query.first()
 
-def getResidentByName():
-    name = input('What is the name of the resident you would like?')
+def getResidentByName(name):
     return Resident.query.filter(Resident.name == name).one()
 
+def deleteResident(name):
+    q = getResidentByName(name)
+    db_session.delete(q)

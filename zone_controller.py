@@ -5,19 +5,29 @@ import models
 import database
 import zone_view
 
+# Create new zones
+def createNewZone():
+	name = input('What would you like to call the new zone?')
+	gpio = input('What gpio would you like to give the new zone?')
+	newZone = models.Zone(name, gpio)
+	database.addZone(newZone)
+	message = " '%s' zone has been added to the database.\n " % (name)
+	print (message)
+
 # Display/print Zone functions
 def listAllZones():
 	zones = database.getAllZones()
-	zone_view.printZones(zones)
+	zone_view.printZoneNames(zones)
 
 def listFirstZone():
 	zone = database.getFirstZone()
-	zone_view.printZone(zone)
+	zone_view.printZoneName(zone)
 
 def listZoneByName():
 	listAllZones()
+
 	zone = database.getZoneByName(name)
-	zone_view.printZone(zone)
+	zone_view.printZoneName(zone)
 
 
 # Read and/or return zone functions
@@ -27,6 +37,7 @@ def returnAllZones():
 
 def returnZoneByName():
 	listAllZones()
+	name = input('What is the name of the zone you would like to get?')
 	zone = database.getZoneByName(name)
 	return zone	
 
@@ -41,11 +52,33 @@ def updateZoneName():
 
 
 # Delete Zone Functions
-def deleteZoneGPIO():
-	zone = database.getZoneByName()
-	zone.delete()
+def deleteZone():
+	name = input('What is the name of the zone you would like to delete?')
+	database.deleteZone(name)
 
 
 
-# test stuff below here
-# listFirstZone()
+# zone monitor functions
+
+def startZoneMonitor():
+	
+	zones = database.returnAllZones
+	for zone in zones:
+		GPIO.add_event_detect(zone.channel, GPIO.RISING, callback=doorClosed())
+		GPIO.add_event_detect(zone.channel, GPIO.FALLING, callback=doorOpened())
+	while True:
+		time.sleep(1/5)
+
+
+
+
+
+def doorOpened():
+	print ("AYYYYE, THE BLAST DOOR HAS BEEN BREACHED!!!")
+
+
+def doorClosed():
+	print ("Ayyyyyyye, de doors be calmer than a whooooores tit.")
+
+
+
