@@ -8,7 +8,7 @@ import models, database
 
 
 
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 database.init_db()
 
 # Config:
@@ -20,21 +20,20 @@ for zone in zones:
 GPIO.setup(2, GPIO.OUT)
 GPIO.output(2, GPIO.HIGH)
 
-#### activate or config any other functions of the monitor
+#### activate or config any other home automation functions
 
 
 
 
 
-# call for a loop that constantly checks the pin state of each zone
+# spin up threads for monitoring various modules
 
-#### start zone_monitor
-#### 
-
-
+#### Zone state monitor
 thread.start_new_thread( zone_controller.startZoneMonitor() )
+#### Resident Occupancy Monitor
+thread.start_new_thread( resident_controller.startResidentMonitor() )
+#### Home data monitor
 
-	  
 
 
 

@@ -7,8 +7,8 @@ import zone_view
 
 # Create new zones
 def createNewZone():
-	name = input('What would you like to call the new zone?')
-	gpio = input('What gpio would you like to give the new zone?')
+	name = input('What would you like to call the new zone?\n')
+	gpio = input('What gpio would you like to give the new zone?\n')
 	newZone = models.Zone(name, gpio)
 	database.addZone(newZone)
 	message = " '%s' zone has been added to the database.\n " % (name)
@@ -37,7 +37,7 @@ def returnAllZones():
 
 def returnZoneByName():
 	listAllZones()
-	name = input('What is the name of the zone you would like to get?')
+	name = input('What is the name of the zone you would like to get?\n')
 	zone = database.getZoneByName(name)
 	return zone	
 
@@ -46,14 +46,14 @@ def returnZoneByName():
 def updateZoneName():
 	listAllZones()
 	zone = database.getZoneByName()
-	name = input("What would you like to rename '%s' to?" % (zone.name))
+	name = input("What would you like to rename '%s' to?\n" % (zone.name))
 	zone.name = name
 	database.db_session.commit()
 
 
 # Delete Zone Functions
 def deleteZone():
-	name = input('What is the name of the zone you would like to delete?')
+	name = input('What is the name of the zone you would like to delete?\n')
 	database.deleteZone(name)
 
 
@@ -67,7 +67,7 @@ def startZoneMonitor():
 		GPIO.add_event_detect(zone.channel, GPIO.RISING, callback=doorClosed())
 		GPIO.add_event_detect(zone.channel, GPIO.FALLING, callback=doorOpened())
 	while True:
-		time.sleep(1/5)
+		time.sleep(0.01)
 
 
 

@@ -1,7 +1,7 @@
-import sqlite3
-import database
 from models import Zone, House, Resident
-import zone_controller, resident_controller
+import zone_controller, resident_controller, database
+
+import sqlite3
 
 #initialize the sqlalchemy/sqlite database
 database.init_db()
