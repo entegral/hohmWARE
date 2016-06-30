@@ -58,3 +58,5 @@ def getResidentByName(name):
 def deleteResident(name):
     q = getResidentByName(name)
     db_session.delete(q)
+
+

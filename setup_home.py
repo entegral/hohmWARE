@@ -1,9 +1,11 @@
 from models import Zone, House, Resident
 import zone_controller, resident_controller, database
 
+import RPi.GPIO as GPIO
 import sqlite3
 
-#initialize the sqlalchemy/sqlite database
+
+# initialize the sqlalchemy/sqlite database
 database.init_db()
 
 ###  ask for input about the home and save into variables  ###

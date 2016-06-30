@@ -67,7 +67,7 @@ def startZoneMonitor():
 		GPIO.add_event_detect(zone.channel, GPIO.RISING, callback=doorClosed())
 		GPIO.add_event_detect(zone.channel, GPIO.FALLING, callback=doorOpened())
 	while True:
-		time.sleep(0.01)
+		time.sleep(300)
 
 
 
