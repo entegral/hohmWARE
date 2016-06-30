@@ -65,7 +65,7 @@ def startResidentMonitor():
 		else:											# set alarm state to ON
 			time.sleep(60)
 			if ping(resident.ip) == False and :
-				alarm_controller.runAlarm()				# wait 2 seconds, then ping the IP again to confirm resident is gone
+				alarm_controller.runAlarm()				# wait 60 seconds, then ping the IP again to confirm resident is gone
 
 			else:
 
