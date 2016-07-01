@@ -24,6 +24,7 @@ GPIO.output(2, GPIO.HIGH)
 
 
 
+# start up / load a house object to store house data state information
 
 
 # spin up threads for monitoring various modules
@@ -32,7 +33,7 @@ GPIO.output(2, GPIO.HIGH)
 thread.start_new_thread( zone_controller.startZoneMonitor() )
 #### Resident Occupancy Monitor
 thread.start_new_thread( resident_controller.startResidentMonitor() )
-#### Home data monitor
+#### House data monitor
 
 
 

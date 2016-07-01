@@ -1,9 +1,9 @@
 __author__ = "Brewski"
 
 
-import models
-import database
-import resident_view
+import models, database, resident_view, house_controller
+import 
+import 
 
 
 import os, platform
@@ -61,15 +61,14 @@ def startResidentMonitor():
 		# ping resident IP and set alarm state if nobody is home	
 		resident_at_home = ping(resident.ip)
 		if resident_at_home == True:					# set alarm state to OFF
-			time.sleep()
+			time.sleep(0.01)
 		else:											# set alarm state to ON
 			time.sleep(60)
 			if ping(resident.ip) == False and :
-				alarm_controller.runAlarm()				# wait 60 seconds, then ping the IP again to confirm resident is gone
+				house_controller.alarmArmed()				# wait 60 seconds, then ping the IP again to confirm resident is gone, if so, arm the system alarm
 
 			else:
-
-
+				
 
 	while True:
 		time.sleep(0.01)
