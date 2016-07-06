@@ -1,18 +1,25 @@
 __author__ = "Brewski"
 
+import models, database, zone_view, house_controller
 
-import models
-import database
-import zone_view
 
 # Create new zones
 def createNewZone():
 	name = input('What would you like to call the new zone?\n')
 	gpio = input('What gpio would you like to give the new zone?\n')
-	newZone = models.Zone(name, gpio)
+	newZone = models.Zone(name= name, channel= gpio)
 	database.addZone(newZone)
 	message = " '%s' zone has been added to the database.\n " % (name)
 	print (message)
+
+def setupZones():
+	# input specific data for each zone  
+	numberofzones = input('how many zones would you like to setup?\n')
+	current_zone = 0
+	while current_zone <= int(numberofzones) - 1:
+	    createNewZone()
+	    current_zone = current_zone + 1
+
 
 # Display/print Zone functions
 def listAllZones():
@@ -75,6 +82,13 @@ def startZoneMonitor():
 
 def doorOpened():
 	print ("AYYYYE, THE BLAST DOOR HAS BEEN BREACHED!!!")
+	residents_at_home = resident_controller.checkResidentPresence()
+	if residents_at_home == True:
+		print ('Flint be taking the ship! Arm yourself laddies!')
+		house_controller.broadcastSMS('Wake up lads! Flint has boarded the ship!')
+		house = House()
+	else:
+		pass
 
 
 def doorClosed():

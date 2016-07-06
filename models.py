@@ -18,24 +18,8 @@ class Zone(Base):
     name = Column(String(50), unique=True)
     channel = Column(Integer, unique=True)
 
-    def __init__(self, name, channel):
-        self.name = name
-        self.channel = channel  
-
     def __repr__(self):
         return '<zone %r>' % (self.name)
-
-#function to identify the gpio pin a zone is configured to
-
-    def identifyyourself(self):
-        print (self.name) + " is assigned to channel " + str(self.channel) + "\n"     
-    
-        #The following line recieves a channel name and sets it up to be an input 
-        #with a pull up resistor. When a zone alarms, the circuit voltage 
-        #will drop and a 'event_detected()' function will trigger                                                                   
-    
-    #def setup(self):
-    #    GPIO.setup(self.channel, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 class Resident(Base):
@@ -47,19 +31,12 @@ class Resident(Base):
     __tablename__ = 'residents'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=False)
-    email = Column(String, unique=True)
-    phone = Column(String, unique=True)
-    ip = Column(String,unique=True)
-    mac = Column(String,unique=True)
+    email = Column(String, unique=False)
+    phone = Column(String, unique=False)
+    ip = Column(String,unique=False)
+    mac = Column(String,unique=False)
     house_id = Column(Integer, ForeignKey('house.id'))
     house = relationship('House', back_populates="residents")
-
-    def __init__(self, name, email, phone, ip, mac):
-        self.name = name
-        self.email = email
-        self.phone = phone
-        self.ip = ip
-        self.mac = mac
 
     def __repr__(self):
         return '<residents %r>' %(self.name)
@@ -74,24 +51,9 @@ class House(Base):
 
     __tablename__ = 'house'
     id = Column(Integer, primary_key=True)
-    residents = relationship("Resident", back_populates="house")
     address = Column(String, unique=False)
-    temperature = Column(Integer,unique=False)
-    occupied = Column(Integer,unique=False)
-
-
-    def __init__(self, residents, address, temperature, occupied):
-        self.residents = residents
-        self.address = address
-        self.temperature = temperature
-        self.occupied = occupied
+    residents = relationship('Resident', back_populates="house")
+    temperatures = Column(Integer,unique=False, nullable = True)
 
     def __repr__(self):
-        return '<house %r>' % (self.name)
-
-    def isoccupied(self):
-        if self.occupied is True:
-
-            return str(self.occupied) + ", " + str(self.address) + " is occupied by " + str(self.residents) + "."
-        else:
-            return str(self.occupied) + ", " + str(self.address) + " is not occupied at this time."
+        return '<house %r>' % (self.address)

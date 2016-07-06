@@ -2,8 +2,6 @@ __author__ = "Brewski"
 
 
 import models, database, resident_view, house_controller
-import 
-import 
 
 
 import os, platform
@@ -15,8 +13,16 @@ def createNewResident():
 	phone = input('What is the phone number of the new resident?\n')
 	ip = input('What is the static IP address of the new resident?\n')
 	mac = input('What is the mac address of the new resident?\n')
-	newResident = models.Resident(name, email, phone, ip, mac)
+	newResident = models.Resident(name= name, email= email, phone= phone, ip= ip, mac= mac)
 	database.addResident(newResident)
+
+def setupResidents():
+	numberofresidents = input('How many residents would you like to add to the home?\n')
+	current_resident = 0
+	while current_resident <= int(numberofresidents) - 1:
+	    createNewResident()
+	    current_resident = current_resident + 1
+
 
 def listAllResidents():
 	residents = database.getAllResidents()
@@ -47,34 +53,40 @@ def updateResidentName():
 	database.db_session.commit()
 
 def deleteResident():
-	database.deleteResident()
+	name = input('What resident would you like to delete?\n')
+	database.deleteResident(name)
 
 # resident monitor functions ##############################################################################################################
 
-def startResidentMonitor():
-
-	# get list of residents from the database and iterate through them checking 
-	# for their presence on the local network, based on their static IPs and a ping
+def checkResidentPresence():
 	
+	"""
+	get list of residents from the database and iterate through them checking 
+	for their presence on the local network, based on their static IPs and a ping function
+	"""
+
 	residents = database.returnAllResidents
-	for resident in residents:	
-		# ping resident IP and set alarm state if nobody is home	
-		resident_at_home = ping(resident.ip)
-		if resident_at_home == True:					# set alarm state to OFF
+	residents_at_home = []
+	for resident in residents:								# ping resident IP and set alarm state if nobody is home	
+		if ping(resident.ip) == True:						# set alarm state to OFF
+			residents_at_home.append(resident.name)
 			time.sleep(0.01)
-		else:											# set alarm state to ON
-			time.sleep(60)
-			if ping(resident.ip) == False and :
-				house_controller.alarmArmed()				# wait 60 seconds, then ping the IP again to confirm resident is gone, if so, arm the system alarm
-
+		else:												# set alarm state to ON
+			time.sleep(3)
+			if ping(resident.ip) == True:
+				residents_at_home.append(resident.name)		# wait 60 seconds, then ping the IP again to confirm resident is gone, if so, break without adding to residents_at_home
 			else:
-				
+				pass
+	if len(residents_at_home) > 0:
+		result = True
+	else:
+		result = False
+	return result
 
-	while True:
-		time.sleep(0.01)
 
 
 def ping(ipaddress):
+    
     """
     Returns True if host responds to a ping request
     """
