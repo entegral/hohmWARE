@@ -60,6 +60,11 @@ def deleteResident(name):
     db_session.delete(q)
     db_session.commit()
 
+def deleteAllResidents():
+    q = getAllResidents()
+    db_session.delete(q)
+    db_session.commit()
+
 # House Database calls
 
 def addHouse(house):
