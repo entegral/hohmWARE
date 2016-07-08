@@ -23,6 +23,48 @@ def setupResidents():
 	    createNewResident()
 	    current_resident = current_resident + 1
 
+# resident monitor functions ##############################################################################################################
+
+def residentsAtHome():
+	
+	"""
+	get list of residents from the database and iterate through them checking 
+	for their presence on the local network, based on their static IPs and a ping function
+	"""
+
+	residents = database.returnAllResidents
+	residents_at_home = []
+	for resident in residents:								# ping resident IP and set alarm state if nobody is home	
+		if ping(resident.ip) == True:						# set alarm state to OFF
+			residents_at_home.append(resident.name)
+			time.sleep(0.01)
+		else:												# set alarm state to ON
+			time.sleep(3)
+			if ping(resident.ip) == True:
+				residents_at_home.append(resident.name)		# wait 60 seconds, then ping the IP again to confirm resident is gone, if so, break without adding to residents_at_home
+			else:
+				pass
+	if len(residents_at_home) > 0:
+		result = True
+	else:
+		result = False
+	return result
+	
+
+def ping(ipaddress):
+    
+    """
+    Returns True if host responds to a ping request
+    """
+
+    # Ping parameters as function of OS
+    ping_str = "-n 1" if  platform.system().lower()=="windows" else "-c 1"
+
+    # Ping
+    return os.system("ping " + ping_str + " " + ipaddress) == 0
+
+
+# Generic resident functions
 
 def listAllResidents():
 	residents = database.getAllResidents()
@@ -55,45 +97,3 @@ def updateResidentName():
 def deleteResident():
 	name = input('What resident would you like to delete?\n')
 	database.deleteResident(name)
-
-# resident monitor functions ##############################################################################################################
-
-def checkResidentPresence():
-	
-	"""
-	get list of residents from the database and iterate through them checking 
-	for their presence on the local network, based on their static IPs and a ping function
-	"""
-
-	residents = database.returnAllResidents
-	residents_at_home = []
-	for resident in residents:								# ping resident IP and set alarm state if nobody is home	
-		if ping(resident.ip) == True:						# set alarm state to OFF
-			residents_at_home.append(resident.name)
-			time.sleep(0.01)
-		else:												# set alarm state to ON
-			time.sleep(3)
-			if ping(resident.ip) == True:
-				residents_at_home.append(resident.name)		# wait 60 seconds, then ping the IP again to confirm resident is gone, if so, break without adding to residents_at_home
-			else:
-				pass
-	if len(residents_at_home) > 0:
-		result = True
-	else:
-		result = False
-	return result
-
-
-
-def ping(ipaddress):
-    
-    """
-    Returns True if host responds to a ping request
-    """
-
-    # Ping parameters as function of OS
-    ping_str = "-n 1" if  platform.system().lower()=="windows" else "-c 1"
-
-    # Ping
-    return os.system("ping " + ping_str + " " + ipaddress) == 0
-

@@ -84,7 +84,7 @@ def deleteHouse(address):
     db_session.commit()
     print('House deleted')
 
-def deleteAllHouses():
+def deleteAll():
     q = getAllHouses()
     r = getAllResidents()
     z = getAllZones()
@@ -94,4 +94,9 @@ def deleteAllHouses():
     db_session.commit()
     print('Entire house data deleted')
 
+# Log Database Calls
+
+def addDataPoint(datapoint):
+    db_sessionadd(datapoint)
+    db_session.commit()
 

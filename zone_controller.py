@@ -80,19 +80,20 @@ def startZoneMonitor():
 
 
 
-def doorOpened():
+def doorOpened(residents_at_home):
+	datapoint = Data_Point()
 	print ("AYYYYE, THE BLAST DOOR HAS BEEN BREACHED!!!")
-	residents_at_home = resident_controller.checkResidentPresence()
-	if residents_at_home == True:
+	residents_at_home = resident_controller.residentsAtHome()
+	if residents_at_home == False:
 		print ('Flint be taking the ship! Arm yourself laddies!')
-		house_controller.broadcastSMS('Wake up lads! Flint has boarded the ship!')
-		house = House()
+		house_controller.broadcastSMS('Wake up lads! Flint has boarded the ship!', database.getAllResidents())
+		# house = House()  <-------- eventually this will take a snapshot of every camera and sensor of the house and persist it to the database
 	else:
 		pass
 
 
 def doorClosed():
-	print ("Ayyyyyyye, de doors be calmer than a whooooores tit.")
+	print ("Ayyyyyyye, de doors be more lonely than a whooooores tit.")
 
 
 

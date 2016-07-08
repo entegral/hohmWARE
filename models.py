@@ -1,17 +1,19 @@
 __author__ = 'Goomba'
 #import RPi.GPIO as GPIO
 #GPIO.setmode(GPIO.BCM)
-from sqlalchemy import Table, Column, Integer, String, ForeignKey
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+import datetime
 
 Base = declarative_base()
 
+
 class Zone(Base):
     
-    """This constructor is to be called when instantiating a new zone. 
-    It should be used only in the setup of the database and configuration 
-    of the system"""
+    """This constructor is to be called when instantiating a new zone. It 
+    should be used only in the setup of the database and configuration of 
+    the system."""
 
     __tablename__ = 'zones'
     id = Column(Integer, primary_key=True)
@@ -47,13 +49,31 @@ class House(Base):
     """This is an object that will be repeatedly instantiated to ensure that
      an accurate state of the house is maintained. The atributes' values will
      be used to determine the state of the house. i.e. 'alarm armed', 'alarm 
-     disarmed', 'current temp', etc"""
+     disarmed', 'current temp', etc."""
 
     __tablename__ = 'house'
     id = Column(Integer, primary_key=True)
-    address = Column(String, unique=False)
+    name = Column(String, unique = True)
+    address = Column(String, unique= True)
     residents = relationship('Resident', back_populates="house")
-    temperatures = Column(Integer,unique=False, nullable = True)
 
     def __repr__(self):
-        return '<house %r>' % (self.address)
+        return '<house %r>' % (self.name)
+
+
+class Data_Point(Base):
+    """This is an object that will collect various home sensor data and log it 
+    with a timestamp."""
+
+    __tablename__ = 'log'
+    id = Column(Integer, primary_key=True)
+    timestamp = Column(DateTime, default= datetime.datetime.utcnow)
+    temperature = Column(Integer, unique= False)
+    open_doors = Column(String, unique= False)
+
+    def __repr__(self):
+        return '<log %r>' % (self.timestamp)
+
+    
+
+
