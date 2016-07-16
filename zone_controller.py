@@ -1,5 +1,7 @@
 __author__ = "Brewski"
 
+import RPi.GPIO as GPIO
+
 import models, database, zone_view, house_controller
 
 
@@ -13,7 +15,7 @@ def createNewZone():
 	print (message)
 
 def setupZones():
-	# input specific data for each zone  
+	# input specific data for each zone
 	numberofzones = input('how many zones would you like to setup?\n')
 	current_zone = 0
 	while current_zone <= int(numberofzones) - 1:
@@ -46,7 +48,7 @@ def returnZoneByName():
 	listAllZones()
 	name = input('What is the name of the zone you would like to get?\n')
 	zone = database.getZoneByName(name)
-	return zone	
+	return zone
 
 
 # Update Zone functions
@@ -68,20 +70,16 @@ def deleteZone():
 # zone monitor functions
 
 def startZoneMonitor():
-	
-	zones = database.returnAllZones
+
+	zones = database.returnAllZones()
 	for zone in zones:
 		GPIO.add_event_detect(zone.channel, GPIO.RISING, callback=doorClosed())
 		GPIO.add_event_detect(zone.channel, GPIO.FALLING, callback=doorOpened())
 	while True:
 		time.sleep(300)
 
-
-
-
-
 def doorOpened(residents_at_home):
-	datapoint = Data_Point()
+
 	print ("AYYYYE, THE BLAST DOOR HAS BEEN BREACHED!!!")
 	residents_at_home = resident_controller.residentsAtHome()
 	if residents_at_home == False:
@@ -95,5 +93,15 @@ def doorOpened(residents_at_home):
 def doorClosed():
 	print ("Ayyyyyyye, de doors be more lonely than a whooooores tit.")
 
-
-
+def doorCheck():
+	"""This function checks the state of each door and returns a list of the names of the
+	doors that are currently open."""
+	zones = database.returnAllZones()
+	open_doors = []
+	for zone in zones:
+		state = GPIO.input(zone.channel)
+		if state = 1:
+			open_doors.append(zone)
+		else:
+			pass
+	return open_doors

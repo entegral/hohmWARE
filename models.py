@@ -1,5 +1,5 @@
 __author__ = 'Goomba'
-#import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO  #these must be turned off until testing on a rasp Pi
 #GPIO.setmode(GPIO.BCM)
 from sqlalchemy import Table, Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,10 +10,12 @@ Base = declarative_base()
 
 
 class Zone(Base):
-    
-    """This constructor is to be called when instantiating a new zone. It 
-    should be used only in the setup of the database and configuration of 
-    the system."""
+
+    """This is an object needed to associate regions of the house with a gpio
+    pin.  It is currently used to setup pins to detect home intrusion, but
+    eventually it will also include pin-association information required to
+     control various functions of the house (i.e. relays for lighting, fans, AC,
+     music, TV, etc.)"""
 
     __tablename__ = 'zones'
     id = Column(Integer, primary_key=True)
@@ -26,9 +28,8 @@ class Zone(Base):
 
 class Resident(Base):
     """This is an object that will store information relating to the people
-    living in the House object below. It will store personal information that
-    will enable this app to function and determine the current state of the 
-    house."""
+    living in the household. It stores personal information that
+    enables this app to interact with the people in the household."""
 
     __tablename__ = 'residents'
     id = Column(Integer, primary_key=True)
@@ -46,10 +47,8 @@ class Resident(Base):
 
 class House(Base):
 
-    """This is an object that will be repeatedly instantiated to ensure that
-     an accurate state of the house is maintained. The atributes' values will
-     be used to determine the state of the house. i.e. 'alarm armed', 'alarm 
-     disarmed', 'current temp', etc."""
+    """This is an object that represents a household. The attributes are likely
+    to change as features are added to this home automation software."""
 
     __tablename__ = 'house'
     id = Column(Integer, primary_key=True)
@@ -62,7 +61,7 @@ class House(Base):
 
 
 class Data_Point(Base):
-    """This is an object that will collect various home sensor data and log it 
+    """This is an object that will collect various home sensor data and log it
     with a timestamp."""
 
     __tablename__ = 'log'
@@ -73,7 +72,3 @@ class Data_Point(Base):
 
     def __repr__(self):
         return '<log %r>' % (self.timestamp)
-
-    
-
-

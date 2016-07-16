@@ -19,6 +19,8 @@ def init_db():
 
     #import RPi.GPIO
 
+    ###     the following functions simplify the process of calling database interactions
+
 # Zone database connections
 
 def addZone(zone):
@@ -42,8 +44,8 @@ def deleteZone(name):
 
 # Resident Database connections
 
-def addResident(resident):
-    db_session.add(resident)
+def addResident(name):
+    db_session.add(name)
     db_session.commit()
 
 def getAllResidents():
@@ -65,7 +67,7 @@ def deleteAllResidents():
     db_session.delete(q)
     db_session.commit()
 
-# House Database calls
+# House Database connections
 
 def addHouse(house):
     db_session.add(house)
@@ -89,6 +91,15 @@ def deleteHouse(address):
     db_session.commit()
     print('House deleted')
 
+# Log Database Calls
+
+def addDataPoint(datapoint):
+    db_sessionadd(datapoint)
+    db_session.commit()
+
+# Miscellaneous
+
+
 def deleteAll():
     q = getAllHouses()
     r = getAllResidents()
@@ -98,10 +109,3 @@ def deleteAll():
     db_session.delete(z)
     db_session.commit()
     print('Entire house data deleted')
-
-# Log Database Calls
-
-def addDataPoint(datapoint):
-    db_sessionadd(datapoint)
-    db_session.commit()
-

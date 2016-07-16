@@ -21,15 +21,15 @@ else:
 
 
 #### assign zones to GPIO pins
-zones = database.getAllZones()    				
+zones = database.getAllZones()
 for zone in zones:
-	GPIO.setup(zone.channel, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)					
+	GPIO.setup(zone.channel, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 GPIO.setup(2, GPIO.OUT)
 GPIO.output(2, GPIO.HIGH)
 
 #### activate or config any other home automation functions
 
-	
+
 
 # start up / load a house object to store house data state information
 
@@ -40,9 +40,5 @@ GPIO.output(2, GPIO.HIGH)
 thread.start_new_thread( zone_controller.startZoneMonitor() )
 #### Resident Occupancy Monitor
 thread.start_new_thread( resident_controller.startResidentMonitor() )
-#### House data monitor
-
-
-
-
-
+#### House data logger
+thread.start_new_thread( house_controller.startDataLogger() )
