@@ -7,13 +7,7 @@ import models, database, resident_view, house_controller
 import os, platform
 
 def createNewResident():
-	#need to finish this fucntion to add new residents and then make a function to delete them
-	name = input('What is the name of the new resident?\n')
-	email = input('What is the email of the new resident?\n')
-	phone = input('What is the phone number of the new resident?\n')
-	ip = input('What is the static IP address of the new resident?\n')
-	mac = input('What is the mac address of the new resident?\n')
-	newResident = models.Resident(name= name, email= email, phone= phone, ip= ip, mac= mac)
+	newResident = models.Resident()
 	database.addResident(newResident)
 
 def setupResidents():
@@ -29,7 +23,8 @@ def residentsAtHome():
 
 	"""
 	get list of residents from the database and iterate through them checking
-	for their presence on the local network, based on their static IPs and a ping function
+	for their presence on the local network, based on their static IPs and a
+	ping function. Returns a list of residents who are
 	"""
 
 	residents = database.returnAllResidents()

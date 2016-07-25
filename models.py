@@ -14,8 +14,8 @@ class Zone(Base):
     """This is an object needed to associate regions of the house with a gpio
     pin.  It is currently used to setup pins to detect home intrusion, but
     eventually it will also include pin-association information required to
-     control various functions of the house (i.e. relays for lighting, fans, AC,
-     music, TV, etc.)"""
+    control various functions of the house (i.e. relays for lighting, fans, AC,
+    music, TV, etc.)"""
 
     __tablename__ = 'zones'
     id = Column(Integer, primary_key=True)
@@ -41,6 +41,13 @@ class Resident(Base):
     house_id = Column(Integer, ForeignKey('house.id'))
     house = relationship('House', back_populates="residents")
 
+    def __init__(self):
+        self.name = input('What is the name of the new resident?\n')
+        self.email = input('What is the email of the new resident?\n')
+        self.phone = input('What is the phone number of the new resident?\n')
+        self.ip = input('What is the static IP address of the new resident?\n')
+        self.mac = input('What is the mac address of the new resident?\n')
+
     def __repr__(self):
         return '<residents %r>' %(self.name)
 
@@ -55,6 +62,10 @@ class House(Base):
     name = Column(String, unique = True)
     address = Column(String, unique= True)
     residents = relationship('Resident', back_populates="house")
+
+    def __init__(self):
+        self.name = input('What would you like to call your new house?\n')
+        self.address = input("What is the address of your house?\n")
 
     def __repr__(self):
         return '<house %r>' % (self.name)

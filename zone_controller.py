@@ -1,6 +1,6 @@
 __author__ = "Brewski"
 
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
 import models, database, zone_view, house_controller
 
@@ -82,9 +82,10 @@ def doorOpened(residents_at_home):
 
 	print ("AYYYYE, THE BLAST DOOR HAS BEEN BREACHED!!!")
 	residents_at_home = resident_controller.residentsAtHome()
+	message_to_residents = 'Wake up lads! Flint has  boarrded the ship!'
 	if residents_at_home == False:
 		print ('Flint be taking the ship! Arm yourself laddies!')
-		house_controller.broadcastSMS('Wake up lads! Flint has boarded the ship!', database.getAllResidents())
+		house_controller.broadcastSMS(message_to_residents, database.getAllResidents())
 		# house = House()  <-------- eventually this will take a snapshot of every camera and sensor of the house and persist it to the database
 	else:
 		pass
@@ -100,7 +101,7 @@ def doorCheck():
 	open_doors = []
 	for zone in zones:
 		state = GPIO.input(zone.channel)
-		if state = 1:
+		if state == 1:
 			open_doors.append(zone)
 		else:
 			pass
