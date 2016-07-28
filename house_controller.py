@@ -10,7 +10,9 @@ from twilio.rest import TwilioRestClient
 
 def broadcastSMS(note, residents):
 
-	""" this function receives a string and sends it to residents as a text message"""
+	"""
+	This function receives a string and sends it to residents as a text message.
+	"""
 
 	accountSID = 'AC4ef5b1267687ff3f1984829aa9e13f8b'
 	authToken = 'afbcc30cede0b005efa5b9c20e365749'
@@ -26,16 +28,24 @@ def broadcastSMS(note, residents):
 # house obj related functions:
 
 def houseDataLogger():
+	"""
+	This function should take a data point every 2 minutes and persist it to
+	the database.
+	"""
 	# take snapshot of every sensor and save their states/values
-	timestamp = datetime.now()
-	temperature = zone_controller.scanTemps 						#NEED TO ADD FUNCTION TO SCAN AND RETURN TEMPERATURES AROUND THE HOUSE
+	while True:
+		timestamp = datetime.now()
+		temperature = zone_controller.scanTemps 						# NEED TO ADD FUNCTION TO SCAN AND RETURN TEMPERATURES AROUND THE HOUSE
+		open_doors = zone_controller.door								# take pictures with all cameras and sensors
 
-	dp = models.Data_Point(timestamp, temperature, open_doors)
+		dp = models.Data_Point(timestamp, temperature, open_doors)
+		time.sleep(5)
 
 def createNewHouse():
-
-	address = input("What is the address of your house?\n")
-	resident_controller.setupResidents()
-	zone_controller.setupZones()
-	house = models.House(name= name, address= address)
-	database.addHouse(house)
+	if database.checkIfHouseExists() == None:
+		house = models.House()
+		database.addHouse(house)
+		resident_controller.setupResidents()
+		zone_controller.setupZones()
+	else:
+		print ("House already exists!")

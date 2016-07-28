@@ -14,8 +14,8 @@ class Zone(Base):
     """This is an object needed to associate regions of the house with a gpio
     pin.  It is currently used to setup pins to detect home intrusion, but
     eventually it will also include pin-association information required to
-     control various functions of the house (i.e. relays for lighting, fans, AC,
-     music, TV, etc.)"""
+    control various functions of the house (i.e. relays for lighting, fans, AC,
+    music, TV, etc.)"""
 
     __tablename__ = 'zones'
     id = Column(Integer, primary_key=True)

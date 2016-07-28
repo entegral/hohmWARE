@@ -80,6 +80,8 @@ def getHouse():
     return House.query.one_or_none()
 
 def getAllHouses():
+    data = House.query.all()
+    print (data)
     return House.query.all()
 
 def getHouseByName(address):
@@ -108,4 +110,4 @@ def deleteAll():
     db_session.delete(r)
     db_session.delete(z)
     db_session.commit()
-    print('Entire house data deleted')
+    print('All house data deleted')

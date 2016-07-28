@@ -29,7 +29,8 @@ def residentsAtHome():
 
 	"""
 	get list of residents from the database and iterate through them checking
-	for their presence on the local network, based on their static IPs and a ping function
+	for their presence on the local network, based on their static IPs and a
+	ping function. Returns a list of residents who are
 	"""
 
 	residents = database.returnAllResidents()
@@ -42,8 +43,6 @@ def residentsAtHome():
 			time.sleep(3)
 			if ping(resident.ip) == True:
 				residents_at_home.append(resident.name)		# wait 60 seconds, then ping the IP again to confirm resident is gone, if so, break without adding to residents_at_home
-			else:
-				pass
 	if len(residents_at_home) > 0:
 		result = True
 	else:
