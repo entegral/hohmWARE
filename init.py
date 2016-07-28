@@ -16,15 +16,22 @@ database.init_db()
 # ___________________________________________________________________________
 
 #### check to see if house object is already in database, if not, add one
-house_controller.createNewHouse()
+if database.checkIfHouseExists() == None:
+	house_controller.createNewHouse()
+else:
+	print ("House already exists!")
+
+if len(database.returnAllResidents()) < 1:
+	resident_controller.setupResidents()
+
 
 
 #### assign zones to GPIO pins
-# zones = database.getAllZones()
-# for zone in zones:
-# 	GPIO.setup(zone.channel, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-# GPIO.setup(2, GPIO.OUT)
-# GPIO.output(2, GPIO.HIGH)
+zones = database.getAllZones()
+for zone in zones:
+	GPIO.setup(zone.channel, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(2, GPIO.OUT)
+GPIO.output(2, GPIO.HIGH)
 
 
 # ___________________________________________________________________________
@@ -32,8 +39,8 @@ house_controller.createNewHouse()
 # ___________________________________________________________________________
 
 #### Zone state monitor
-# thread.start_new_thread( zone_controller.startZoneMonitor() )
+thread.start_new_thread( zone_controller.startZoneMonitor() )
 # #### Resident Occupancy Monitor
-# thread.start_new_thread( resident_controller.startResidentMonitor() )
+thread.start_new_thread( resident_controller.startResidentMonitor() )
 # #### House data logger
-# thread.start_new_thread( house_controller.houseDataLogger() )
+thread.start_new_thread( house_controller.houseDataLogger() )

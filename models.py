@@ -20,7 +20,9 @@ class Zone(Base):
     __tablename__ = 'zones'
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
-    channel = Column(Integer, unique=True)
+    gpio_pin = Column(Integer, unique=True)
+    house_id = Column(Integer, ForeignKey('house.id'))
+    house = relationship('House', back_populates="zones")
 
     def __repr__(self):
         return '<zone %r>' % (self.name)
@@ -55,6 +57,7 @@ class House(Base):
     name = Column(String, unique = True)
     address = Column(String, unique= True)
     residents = relationship('Resident', back_populates="house")
+    zones = relationship('Zone', back_populates="house")
 
     def __repr__(self):
         return '<house %r>' % (self.name)

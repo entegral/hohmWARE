@@ -9,7 +9,7 @@ import models, database, zone_view, house_controller
 def createNewZone():
 	name = input('What would you like to call the new zone?\n')
 	gpio = input('What gpio would you like to give the new zone?\n')
-	newZone = models.Zone(name= name, channel= gpio)
+	newZone = models.Zone(name, gpio)
 	database.addZone(newZone)
 	message = " '%s' zone has been added to the database.\n " % (name)
 	print (message)

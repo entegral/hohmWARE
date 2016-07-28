@@ -1,4 +1,4 @@
-from models import Zone, House, Resident
+ffrom models import Zone, House, Resident
 import zone_controller, resident_controller, database
 
 import RPi.GPIO as GPIO
@@ -11,7 +11,7 @@ numberofzones = input('How many zones would you like to setup?\n')
 numberofresidents = input('How many people live in your home?\n')
 
 
-#  data input specific for each zone  
+#  data input specific for each zone
 current_zone = 0
 while current_zone <= int(numberofzones) - 1:
     zone_controller.createNewZone()

@@ -36,16 +36,15 @@ def houseDataLogger():
 	while True:
 		timestamp = datetime.now()
 		temperature = zone_controller.scanTemps 						# NEED TO ADD FUNCTION TO SCAN AND RETURN TEMPERATURES AROUND THE HOUSE
-		open_doors = zone_controller.door								# take pictures with all cameras and sensors
+		open_doors = zone_controller.doorCheck								# take pictures with all cameras and sensors
 
 		dp = models.Data_Point(timestamp, temperature, open_doors)
 		time.sleep(5)
 
 def createNewHouse():
-	if database.checkIfHouseExists() == None:
-		house = models.House()
-		database.addHouse(house)
-		resident_controller.setupResidents()
-		zone_controller.setupZones()
-	else:
-		print ("House already exists!")
+	name = input('What is the name of your house?')
+	address = input('What is the address of your house?')
+	house = models.House(name, address)
+	database.addHouse(house)
+	resident_controller.setupResidents()
+	zone_controller.setupZones()
