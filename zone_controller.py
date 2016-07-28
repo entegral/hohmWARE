@@ -103,6 +103,4 @@ def doorCheck():
 		state = GPIO.input(zone.channel)
 		if state == 1:
 			open_doors.append(zone)
-		else:
-			pass
 	return open_doors

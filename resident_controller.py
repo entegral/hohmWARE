@@ -7,7 +7,13 @@ import models, database, resident_view, house_controller
 import os, platform
 
 def createNewResident():
-	newResident = models.Resident()
+	#need to finish this fucntion to add new residents and then make a function to delete them
+	name = input('What is the name of the new resident?\n')
+	email = input('What is the email of the new resident?\n')
+	phone = input('What is the phone number of the new resident?\n')
+	ip = input('What is the static IP address of the new resident?\n')
+	mac = input('What is the mac address of the new resident?\n')
+	newResident = models.Resident(name= name, email= email, phone= phone, ip= ip, mac= mac)
 	database.addResident(newResident)
 
 def setupResidents():
@@ -37,8 +43,6 @@ def residentsAtHome():
 			time.sleep(3)
 			if ping(resident.ip) == True:
 				residents_at_home.append(resident.name)		# wait 60 seconds, then ping the IP again to confirm resident is gone, if so, break without adding to residents_at_home
-			else:
-				pass
 	if len(residents_at_home) > 0:
 		result = True
 	else:
