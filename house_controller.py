@@ -8,7 +8,7 @@ from twilio.rest import TwilioRestClient
 
 # house alarm related functions:
 
-def broadcastSMS(note, residents):
+def sendSMS(note, residents):
 
 	"""
 	This function receives a string and sends it to residents as a text message.
@@ -24,22 +24,19 @@ def broadcastSMS(note, residents):
 		time.sleep(0.01)
 
 
-
 # house obj related functions:
 
-def houseDataLogger():
+def securityLogger():
 	"""
-	This function should take a data point every 2 minutes and persist it to
-	the database.
+	This function should take a data point every time its called.
 	"""
 	# take snapshot of every sensor and save their states/values
-	while True:
 		timestamp = datetime.now()
-		temperature = zone_controller.scanTemps 						# NEED TO ADD FUNCTION TO SCAN AND RETURN TEMPERATURES AROUND THE HOUSE
-		open_doors = zone_controller.doorCheck								# take pictures with all cameras and sensors
+		open_doors = zone_controller.doorCheck							# take pictures with all cameras and sensors
 
-		dp = models.Data_Point(timestamp, temperature, open_doors)
-		time.sleep(5)
+		dp = models.Security_Data_Point(timestamp, open_doors)
+		database.addDataPoint(dp)
+
 
 def createNewHouse():
 	name = input('What is the name of your house?')

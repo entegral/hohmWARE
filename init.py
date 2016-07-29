@@ -18,13 +18,12 @@ database.init_db()
 #### check to see if house object is already in database, if not, add one
 if database.checkIfHouseExists() == None:
 	house_controller.createNewHouse()
-else:
-	print ("House already exists!")
 
 if len(database.returnAllResidents()) < 1:
 	resident_controller.setupResidents()
 
-
+if len(database.returnAllZones()) < 1:
+	zone_controller.setupZones()
 
 #### assign zones to GPIO pins
 zones = database.getAllZones()

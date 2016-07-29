@@ -96,7 +96,7 @@ def deleteHouse(address):
 # Log Database Calls
 
 def addDataPoint(datapoint):
-    db_sessionadd(datapoint)
+    db_session.add(datapoint)
     db_session.commit()
 
 # Miscellaneous
