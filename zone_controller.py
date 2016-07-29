@@ -78,7 +78,7 @@ def startZoneMonitor():
 	while True:
 		time.sleep(300)
 
-def doorOpened(residents_at_home):
+def doorOpened():
 
 	print ("AYYYYE, THE BLAST DOOR HAS BEEN BREACHED!!!")
 	residents_at_home = resident_controller.residentsAtHome()
