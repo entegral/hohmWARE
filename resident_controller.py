@@ -79,38 +79,3 @@ def ping(ipaddress):
 
     # Ping
     return os.system("ping " + ping_str + " " + ipaddress) == 0
-
-
-# Generic resident functions
-
-def listAllResidents():
-	residents = database.getAllResidents()
-	resident_view.printAllResidents(residents)
-
-def listFirstResident():
-	resident = database.getFirstResident()
-	resident_view.printResident(resident)
-
-def listResidentByName():
-	listAllResidentsData
-	resident = database.getResidentByName(name)
-	resident_view.printAllResident(resident)
-
-def returnAllResidents():
-	residents = database.getAllResidents()
-	return residents
-
-def returnResidentByName():
-	name = input('What is the name of the resident you would like to get?\n')
-	resident = database.getResidentByName(name)
-	return resident
-
-def updateResidentName():
-	resident = database.getResidentByName()
-	name = input('What is the new name of this user?\n')
-	resident.name = name
-	database.db_session.commit()
-
-def deleteResident():
-	name = input('What resident would you like to delete?\n')
-	database.deleteResident(name)

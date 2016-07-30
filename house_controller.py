@@ -1,7 +1,7 @@
 import models, database, resident_controller, zone_controller
 
 import time
-from datetime import datetime
+import datetime
 from twilio.rest import TwilioRestClient
 
 
@@ -31,11 +31,12 @@ def securityLogger():
 	This function should take a data point every time its called.
 	"""
 	# take snapshot of every sensor and save their states/values
-		timestamp = datetime.now()
-		open_doors = zone_controller.doorCheck							# take pictures with all cameras and sensors
+	timestamp = datetime.datetime.now()
+	open_doors = zone_controller.doorCheck()ls
+																	# take pictures with all cameras and sensors
 
-		dp = models.Security_Data_Point(timestamp, open_doors)
-		database.addDataPoint(dp)
+	dp = models.Security_Data_Point(timestamp, open_doors)
+	database.addDataPoint(dp)
 
 
 def createNewHouse():

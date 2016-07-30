@@ -23,50 +23,6 @@ def setupZones():
 	    current_zone = current_zone + 1
 
 
-# Display/print Zone functions
-def listAllZones():
-	zones = database.getAllZones()
-	zone_view.printZoneNames(zones)
-
-def listFirstZone():
-	zone = database.getFirstZone()
-	zone_view.printZoneName(zone)
-
-def listZoneByName():
-	listAllZones()
-
-	zone = database.getZoneByName(name)
-	zone_view.printZoneName(zone)
-
-
-# Read and/or return zone functions
-def returnAllZones():
-	zones = database.getAllZones()
-	return zones
-
-def returnZoneByName():
-	listAllZones()
-	name = input('What is the name of the zone you would like to get?\n')
-	zone = database.getZoneByName(name)
-	return zone
-
-
-# Update Zone functions
-def updateZoneName():
-	listAllZones()
-	zone = database.getZoneByName()
-	name = input("What would you like to rename '%s' to?\n" % (zone.name))
-	zone.name = name
-	database.db_session.commit()
-
-
-# Delete Zone Functions
-def deleteZone():
-	name = input('What is the name of the zone you would like to delete?\n')
-	database.deleteZone(name)
-
-
-
 # zone monitor functions
 
 def startZoneMonitor():
