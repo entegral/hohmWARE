@@ -23,50 +23,6 @@ def setupZones():
 	    current_zone = current_zone + 1
 
 
-# Display/print Zone functions
-def listAllZones():
-	zones = database.getAllZones()
-	zone_view.printZoneNames(zones)
-
-def listFirstZone():
-	zone = database.getFirstZone()
-	zone_view.printZoneName(zone)
-
-def listZoneByName():
-	listAllZones()
-
-	zone = database.getZoneByName(name)
-	zone_view.printZoneName(zone)
-
-
-# Read and/or return zone functions
-def returnAllZones():
-	zones = database.getAllZones()
-	return zones
-
-def returnZoneByName():
-	listAllZones()
-	name = input('What is the name of the zone you would like to get?\n')
-	zone = database.getZoneByName(name)
-	return zone
-
-
-# Update Zone functions
-def updateZoneName():
-	listAllZones()
-	zone = database.getZoneByName()
-	name = input("What would you like to rename '%s' to?\n" % (zone.name))
-	zone.name = name
-	database.db_session.commit()
-
-
-# Delete Zone Functions
-def deleteZone():
-	name = input('What is the name of the zone you would like to delete?\n')
-	database.deleteZone(name)
-
-
-
 # zone monitor functions
 
 def startZoneMonitor():
@@ -75,20 +31,17 @@ def startZoneMonitor():
 	for zone in zones:
 		GPIO.add_event_detect(zone.channel, GPIO.RISING, callback=doorClosed())
 		GPIO.add_event_detect(zone.channel, GPIO.FALLING, callback=doorOpened())
-	while True:
-		time.sleep(300)
 
 def doorOpened():
 
-	print ("AYYYYE, THE BLAST DOOR HAS BEEN BREACHED!!!")
-	residents_at_home = resident_controller.residentsAtHome()
+	""" This function sends out an alert if:
+		(1) when the front door has opened,
+		and (2) if nobody is home """
+
 	message_to_residents = 'Wake up lads! Flint has  boarrded the ship!'
-	if residents_at_home == False:
-		print ('Flint be taking the ship! Arm yourself laddies!')
-		house_controller.broadcastSMS(message_to_residents, database.getAllResidents())
-		# house = House()  <-------- eventually this will take a snapshot of every camera and sensor of the house and persist it to the database
-	else:
-		pass
+	if resident_controller.residentsAtHome() == False:
+		house_controller.sendSMS(message_to_residents, database.getAllResidents())
+		house_controller.securityLogger()
 
 
 def doorClosed():
@@ -102,5 +55,5 @@ def doorCheck():
 	for zone in zones:
 		state = GPIO.input(zone.channel)
 		if state == 1:
-			open_doors.append(zone)
+			open_doors.append(zone.name)
 	return open_doors

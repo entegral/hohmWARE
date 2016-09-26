@@ -1,6 +1,7 @@
 __author__ = 'Goomba'
 #import RPi.GPIO as GPIO  #these must be turned off until testing on a rasp Pi
 #GPIO.setmode(GPIO.BCM)
+
 from sqlalchemy import Table, Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -31,15 +32,18 @@ class Zone(Base):
 class Resident(Base):
     """This is an object that will store information relating to the people
     living in the household. It stores personal information that
-    enables this app to interact with the people in the household."""
+    enables this app to interact with the people in the household.
+    It also holds information relating to the "role" the resident has. """
 
     __tablename__ = 'residents'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=False)
     email = Column(String, unique=False)
+    user_pin = Column(String, unique=False)
     phone = Column(String, unique=False)
     ip = Column(String,unique=False)
     mac = Column(String,unique=False)
+    role = Column(String, unique=False)
     house_id = Column(Integer, ForeignKey('house.id'))
     house = relationship('House', back_populates="residents")
 
@@ -59,18 +63,21 @@ class House(Base):
     residents = relationship('Resident', back_populates="house")
     zones = relationship('Zone', back_populates="house")
 
+    def __init__(self, name, address):
+        self.name = name
+        self.address = address
+
     def __repr__(self):
         return '<house %r>' % (self.name)
 
 
-class Data_Point(Base):
+class Security_Data_Point(Base):
     """This is an object that will collect various home sensor data and log it
     with a timestamp."""
 
     __tablename__ = 'log'
     id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime, default= datetime.datetime.utcnow)
-    temperature = Column(Integer, unique= False)
     open_doors = Column(String, unique= False)
 
     def __repr__(self):

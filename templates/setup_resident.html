@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+
+
+  <body>
+    <h1>Welcome to the Resident setup page!</h1>
+    <h2>Please enter information for the new roomie:</h2>
+
+
+    <form method="POST" action="{{  url_for('submit_resident_data')  }}">
+      <div><h3>New Roomie's Info:</h3></div>
+      <div><input type="text" name='name'>Name</input></div>
+      <div><input type="text" name='email'>Email</input></div>
+      <div><input type="text" name='user_pin'>Secret Pin Number</input></div>
+      <div><input type="text" name='phone'>Phone Number</input></div>
+      <div><input type="text" name='ip'>Static IP address (ask Robby for one if not known)</input></div>
+      <div><input type="text" name='mac'>Phone's MAC address (google how to look this up if you dont know what it is)</input></div>
+      <button type="submit"> Save Resident </button>
+    </form>
+
+    <div></div>
+
+    <div>
+      <p><a href="{{  url_for('dashboard')  }}">Dashboard</a></p>
+    </div>
+    <div>
+      <p><a href="{{  url_for('setup_house')  }}">House Setup</a></p>
+    </div>
+    
+  </body>
+
+</html>
