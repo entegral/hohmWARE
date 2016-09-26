@@ -6,3 +6,5 @@ database.pyc
 .idea
 
 .idea/workspace.xml
+
+*.pyc
