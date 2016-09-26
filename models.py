@@ -63,6 +63,10 @@ class House(Base):
     residents = relationship('Resident', back_populates="house")
     zones = relationship('Zone', back_populates="house")
 
+    def __init__(self, name, address):
+        self.name = name
+        self.address = address
+
     def __repr__(self):
         return '<house %r>' % (self.name)
 

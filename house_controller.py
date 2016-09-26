@@ -32,17 +32,13 @@ def securityLogger():
 	"""
 	# take snapshot of every sensor and save their states/values
 	timestamp = datetime.datetime.now()
-	open_doors = zone_controller.doorCheck()ls
+	open_doors = zone_controller.doorCheck()
 																	# take pictures with all cameras and sensors
 
 	dp = models.Security_Data_Point(timestamp, open_doors)
 	database.addDataPoint(dp)
 
 
-def createNewHouse():
-	name = input('What is the name of your house?')
-	address = input('What is the address of your house?')
+def createNewHouse(name, address):
 	house = models.House(name, address)
 	database.addHouse(house)
-	resident_controller.setupResidents()
-	zone_controller.setupZones()
