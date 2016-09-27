@@ -47,6 +47,15 @@ class Resident(Base):
     house_id = Column(Integer, ForeignKey('house.id'))
     house = relationship('House', back_populates="residents")
 
+    def __init__(self, name, email, user_pin, phone, ip, mac, role):
+        self.name = name
+        self.email = email
+        self.user_pin = user_pin
+        self.phone = phone
+        self.ip = ip
+        self.mac = mac
+        self.role = role
+
     def __repr__(self):
         return '<residents %r>' %(self.name)
 

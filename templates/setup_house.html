@@ -1,24 +1,32 @@
 <!doctype html>
 <html>
   <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
   </head>
 
 
   <body>
-    <h1>Welcome to the Home setup page!</h1>
-    <h2>Please enter information for the new house:</h2>
+    <h1>Welcome to the Home Configuration Page!</h1>
 
-
+  <div class="setup">
     <form method="POST" action="{{  url_for('submit_house_data')  }}">
-      <div><input type="text" name='name'>Bequeath your House with a name</input></div>
-      <div><input type="text" name='address'>What is the address of your house</input></div>
+      <p><input type="text" name='name'>Bequeath your House with a name</input></p>
+      <p><input type="text" name='address'>What is the address of your house</input></p>
       <button type="submit"> Save House </button>
     </form>
+  </div>
+
+  <div class="dbdisplay">
+    <h3>If your house is already listed below, please continue on to the Resident Configuration Page</h3>
+    {% for each in house %}
+    <p><h2> {{ each.name }} </h2></p>
+    <p>  {{ each.address }}  </p>
+    {% endfor %}
+  </div>
 
 
     <div>
-      <p>Already have a house setup?<a href="{{  url_for('setup_resident')  }}"> Setup a New Resident</a></p>
+      <p><a href="{{  url_for('setup_resident')  }}"> Resident Configuration Page</a></p>
     </div>
     <div>
       <p><a href="{{  url_for('dashboard')  }}">Dashboard</a></p>

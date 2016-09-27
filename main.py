@@ -7,6 +7,8 @@ database.init_db()
 app = Flask(__name__)
 
 
+# Setup routes - functions and routing related to the setup and configuration of the household
+
 @app.route('/')
 @app.route('/dashboard')
 def dashboard():
@@ -18,11 +20,13 @@ def setup_home():
 
 @app.route('/setup_house')
 def setup_house():
-    return render_template('setup_house.html')
+    house_in_db = database.getAllHouses()
+    return render_template('setup_house.html', house=house_in_db)
 
 @app.route('/setup_resident')
 def setup_resident():
-    return render_template('setup_resident.html')
+    residents = database.getAllResidents()
+    return render_template('setup_resident.html', residents=residents)
 
 @app.route('/setup/submit_house', methods=['GET', 'POST'])
 def submit_house_data():
@@ -31,12 +35,12 @@ def submit_house_data():
         name = request.form['name']
         address = request.form['address']
         house_controller.createNewHouse(name, address)
-        return redirect(url_for('setup_resident.html'))
+        return redirect(url_for('setup_resident'))
     return render_template('setup_house.html')
 
-@app.route('/setup/submit_resident', methods=['get', 'post'])
+@app.route('/setup/submit_resident', methods=['GET', 'POST'])
 def submit_resident_data():
-    if request.method == 'post':
+    if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
         user_pin = request.form['user_pin']
@@ -44,9 +48,22 @@ def submit_resident_data():
         ip = request.form['ip']
         mac = request.form['mac']
         resident_controller.createNewResident(name, email, user_pin, phone, ip, mac)
-        return render_template('setup.resident.html')
+        return redirect(url_for('setup_resident'))
     return render_template('setup_resident.html')
 
+@app.route('/remove_resident', methods=['POST'])
+def remove_resident():
+    name_to_remove = request.form['removeResident']
+    database.deleteResident(name_to_remove)
+    return redirect(url_for('setup_resident'))
+
+@app.route('/test')
+def testpage():
+    return render_template('test.html')
+
+@app.route('/animalfeeder')
+def animalfeeder():
+    return render_template(url_for('animalfeeder.html'))
 
 if __name__ == "__main__":
     app.run(debug=True)

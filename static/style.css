@@ -1,5 +1,45 @@
-h1 {
-  color: deepskyblue;
 
+body {
+  text-align: center;
+  font-family: "Sans Serif", Helvetica, Times ;
+}
 
+.home{
+  margin: 50px auto auto auto;
+  border: 2px solid;
+  background-color: #F5F5DC;
+  border-radius: 5px;
+  width: 100px;
+}
+
+.dashsetup{
+  margin: 25px auto auto auto;
+  border: 2px solid;
+  background-color: #9BDEFF;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.setup{
+  margin: 25px auto auto auto;
+  border: 2px solid;
+  background-color: #9BDEFF;
+  border-radius: 5px;
+  width: max-content;
+  left: 10px;
+  text-align: justify;
+  padding: 10px;
+}
+
+button {
+  margin: auto auto 10px auto;
+}
+
+.dbdisplay {
+  margin: 25px auto auto auto;
+  border: 2px solid;
+  background-color: #F5F5DC;
+  border-radius: 5px;
+  width: max-content;
+  padding: 10px;
 }
