@@ -2,7 +2,7 @@ __author__ = 'Goomba'
 #import RPi.GPIO as GPIO  #these must be turned off until testing on a rasp Pi
 #GPIO.setmode(GPIO.BCM)
 
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import datetime
@@ -27,7 +27,6 @@ class Zone(Base):
 
     def __repr__(self):
         return '<zone %r>' % (self.name)
-
 
 class Resident(Base):
     """This is an object that will store information relating to the people
@@ -59,7 +58,6 @@ class Resident(Base):
     def __repr__(self):
         return '<residents %r>' %(self.name)
 
-
 class House(Base):
 
     """This is an object that represents a household. The attributes are likely
@@ -79,7 +77,6 @@ class House(Base):
     def __repr__(self):
         return '<house %r>' % (self.name)
 
-
 class Security_Data_Point(Base):
     """This is an object that will collect various home sensor data and log it
     with a timestamp."""
@@ -91,3 +88,19 @@ class Security_Data_Point(Base):
 
     def __repr__(self):
         return '<log %r>' % (self.timestamp)
+
+class Pet(Base):
+    """This is an object for use in coordinating animal feed times"""
+
+    __tablename__ = 'Pets'
+    id = Column(Integer, primary_key=True)
+    fed_am = Column(Boolean, unique=False, default=False)
+    fed_pm = Column(Boolean, unique=False, default=False)
+    date = Column(DateTime, default= datetime.datetime.utcnow)
+
+    def __init__(self, fed_am, fed_pm):
+        self.fed_am = fed_am
+        self.fed_pm = fed_pm
+
+    def __repr__(self):
+        return '<log %r>' % (self.date)

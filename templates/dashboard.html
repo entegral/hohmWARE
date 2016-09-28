@@ -11,11 +11,13 @@
   <body>
     <div>
     <h1>Welcome to La Casa del Shreeeemp!</h1>
+    <img class="shrimp" src="{{ url_for('static', filename='bill_and_will.jpg')}}" />
     </div>
 
     <div2>
       <ul>
-        <p><a href="{{  url_for('setup_home')  }}">Configure Household Here!</a></p>
+        <p><a href="{{ url_for('animalfeeder') }}"> Pet Food Check <br> </a></p>
+        <p><a href="{{  url_for('setup_home')  }}"> Configure Household Here! </a></p>
       </ul>
     </div2>
 

@@ -38,6 +38,9 @@ def securityLogger():
 	dp = models.Security_Data_Point(timestamp, open_doors)
 	database.addDataPoint(dp)
 
+def animals_are_fed(fed_am, fed_pm):
+	feedpoint = models.Pet(fed_am, fed_pm)
+	database.fedAnimals(feedpoint)
 
 def createNewHouse(name, address):
 	house = models.House(name, address)

@@ -63,7 +63,22 @@ def testpage():
 
 @app.route('/animalfeeder')
 def animalfeeder():
-    return render_template(url_for('animalfeeder.html'))
+    pets_fed_today = database.getTodaysPetInfo()
+    return render_template('animalfeeder.html', pets=pets_fed_today)
+
+@app.route('/animals_fedam', methods=['POST'])
+def animals_fedam():
+    animalsam = True
+    animalspm = False
+    house_controller.animals_are_fed(animalsam, animalspm)
+    return redirect(url_for('dashboard'))
+
+@app.route('/animals_fedpm', methods=['POST'])
+def animals_fedpm():
+    animalsam = False
+    animalspm = True
+    house_controller.animals_are_fed(animalsam, animalspm)
+    return redirect(url_for('dashboard'))
 
 if __name__ == "__main__":
     app.run(debug=True)

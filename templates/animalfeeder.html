@@ -5,5 +5,35 @@
   </head>
 
 <body>
-  
+  <div class="animalsam">
+    <h3>AM</h3>
+    <p>Did you feed the animals?<br></p>
+    <form action="{{ url_for('animals_fedam') }}" method="POST">
+      <button type="submit" value="Confirm Fed">Confirm Fed</button>
+    </form>
+  </div>
+
+  <div class="animalspm">
+    <h3>PM</h3>
+    <p>Did you feed the animals?<br></p>
+    <form action="{{ url_for('animals_fedpm') }}" method="POST">
+      <button type="submit" value="Confirm Fed">Confirm Fed</button>
+    </form>
+  </div>
+
+
+  <div>
+    <h3>Previously Fed Dates</h3>
+    {% for each in pets %}
+    <h4>{{ each.date }} </h4>
+    {{ each.fed_am }} <br>
+    {{ each.fed_pm }} <br>
+
+    {% endfor %}
+  </div>
+
+  <div>
+    <p><a href="{{  url_for('dashboard')  }}">Dashboard</a></p>
+  </div>
+
 </body>

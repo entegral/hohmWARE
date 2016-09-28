@@ -43,3 +43,26 @@ button {
   width: max-content;
   padding: 10px;
 }
+
+.animalsam {
+  margin: 25px auto auto auto;
+  border: 2px solid;
+  background-color: #F5F5DC;
+  border-radius: 5px;
+  width: max-content;
+  padding: 10px;
+}
+
+.animalspm {
+  margin: 25px auto auto auto;
+  border: 2px solid;
+  background-color: #9BDEFF;
+  border-radius: 5px;
+  width: max-content;
+  padding: 10px;
+}
+
+.shrimp {
+  height: auto;
+  max-width: 105%;
+}

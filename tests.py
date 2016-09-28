@@ -1,4 +1,5 @@
 import database
 
 database.init_db()
-database.deleteAllResidents()
+p = database.getAllPetInfo()
+print(p)

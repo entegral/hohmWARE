@@ -1,7 +1,8 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from models import Base, Zone, Resident, House
+from models import Base, Zone, Resident, House, Pet
+import datetime
 
 engine = create_engine('sqlite:///homeware.db', convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
@@ -99,8 +100,20 @@ def addDataPoint(datapoint):
     db_session.add(datapoint)
     db_session.commit()
 
+def getTodaysPetInfo():
+    current_date = datetime.datetime.utcnow()
+    today = current_date - datetime.timedelta(days=0)
+    q = Pet.query.filter(Pet.date <= today).all()
+    return q
+
+def getAllPetInfo():
+    return Pet.query.all()
+
 # Miscellaneous
 
+def fedAnimals(fedAnimals):
+    db_session.add(fedAnimals)
+    db_session.commit()
 
 def deleteAll():
     q = getAllHouses()
