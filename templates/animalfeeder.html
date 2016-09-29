@@ -4,30 +4,50 @@
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
   </head>
 
-<body>
-  <div class="animalsam">
-    <h3>AM</h3>
-    <p>Did you feed the animals?<br></p>
-    <form action="{{ url_for('animals_fedam') }}" method="POST">
-      <button type="submit" value="Confirm Fed">Confirm Fed</button>
-    </form>
+<body background="/static/images/bill_and_will.jpg">
+
+  <div class="banner">
+    <ul>
+      <li><img src="/static/images/shrimp.png" id="shrimpicon"/></li>
+      <li><a href="{{ url_for('dashboard') }}" id="homelink">La Casa del Shreeeemp!</h1></li>
+    </ul>
   </div>
 
-  <div class="animalspm">
-    <h3>PM</h3>
-    <p>Did you feed the animals?<br></p>
-    <form action="{{ url_for('animals_fedpm') }}" method="POST">
-      <button type="submit" value="Confirm Fed">Confirm Fed</button>
-    </form>
+  <div class="navmenu">
+    <div class="links">
+      <ul>
+        <li><a href="{{ url_for('animalfeeder') }}">Pet Food Check </a></li>
+        <li><a href="{{  url_for('setup_home')  }}">Configure Household Here! </a></li>
+      </ul>
+    </div>
   </div>
 
+  <div id="feedinput">
+    <h1>Did you feed the animals?</h1>
+    <div id="animalsam">
+      <h2>AM</h2>
+      <form action="{{ url_for('animals_fedam') }}" method="POST">
+        <button type="submit" value="Confirm Fed">Confirm Fed</button>
+      </form>
+    </div>
 
-  <div>
-    <h3>Previously Fed Dates</h3>
+    <div id="animalspm">
+      <h2>PM</h2>
+      <form action="{{ url_for('animals_fedpm') }}" method="POST">
+        <button type="submit" value="Confirm Fed">Confirm Fed</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="feedtimes">
+    <h1>Previously Fed Dates</h1>
     {% for each in pets %}
-    <h4>{{ each.date }} </h4>
-    {{ each.fed_am }} <br>
-    {{ each.fed_pm }} <br>
+
+    <div id="feedtime">
+      <h4> {{ each.date.strftime('%d-%m-%Y') }} </h4>
+      <p> {{ each.fed_am }} </p>
+      <p> {{ each.fed_pm }} </p>
+    </div>
 
     {% endfor %}
   </div>

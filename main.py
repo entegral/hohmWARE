@@ -71,14 +71,18 @@ def animals_fedam():
     animalsam = True
     animalspm = False
     house_controller.animals_are_fed(animalsam, animalspm)
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('animalfeeder'))
 
 @app.route('/animals_fedpm', methods=['POST'])
 def animals_fedpm():
-    animalsam = False
-    animalspm = True
-    house_controller.animals_are_fed(animalsam, animalspm)
-    return redirect(url_for('dashboard'))
+    todays_info = database.getTodaysPetInfo()
+    if todays_info == None:
+        animalsam = False
+        animalspm = True
+        house_controller.animals_are_fed(animalsam, animalspm)
+    todays_info[0].fed_pm = True
+    database.db_session.commit()
+    return redirect(url_for('animalfeeder'))
 
 if __name__ == "__main__":
     app.run(debug=True)

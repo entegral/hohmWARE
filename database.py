@@ -100,9 +100,10 @@ def addDataPoint(datapoint):
     db_session.add(datapoint)
     db_session.commit()
 
+# functions about the pet feeding schedule
 def getTodaysPetInfo():
     current_date = datetime.datetime.utcnow()
-    today = current_date - datetime.timedelta(days=0)
+    today = current_date - datetime.timedelta(days=1)
     q = Pet.query.filter(Pet.date <= today).all()
     return q
 

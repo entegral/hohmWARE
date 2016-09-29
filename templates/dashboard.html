@@ -5,21 +5,25 @@
 
   </head>
   <title>
-    Welcome to your Dashboard!
+    Casa Del Shrimp!
   </title>
 
-  <body>
-    <div>
-    <h1>Welcome to La Casa del Shreeeemp!</h1>
-    <img class="shrimp" src="{{ url_for('static', filename='bill_and_will.jpg')}}" />
+  <body background="/static/images/bill_and_will.jpg">
+
+    <div class="banner">
+      <div>
+        <a href="{{ url_for('dashboard') }}" id="homelink">La Casa del Shreeeemp!</h1>
+      </div>
     </div>
 
-    <div2>
-      <ul>
-        <p><a href="{{ url_for('animalfeeder') }}"> Pet Food Check <br> </a></p>
-        <p><a href="{{  url_for('setup_home')  }}"> Configure Household Here! </a></p>
-      </ul>
-    </div2>
+    <div class="navmenu">
+      <div class="links">
+        <ul>
+          <li><a href="{{ url_for('animalfeeder') }}">Pet Food Check </a></li>
+          <li><a href="{{  url_for('setup_home')  }}">Configure Household Here! </a></li>
+        </ul>
+      </div>
+    </div>
 
   </body>
 </html>

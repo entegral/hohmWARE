@@ -24,12 +24,21 @@
     <div class="dbdisplay">
       <h3>The following are the roomies already in the database:</h3>
       {% for each in residents %}
-      <h3> {{ each.name }} </h3>
-      <p>  {{ each.phone }}  </p>
+      <ol>
+        <li>
+          <div class="iterant">
+            <h4> {{ each.name }} </h4>
+            <p>  {{ each.phone }}  </p>
+          </div>
+        </li>
+      </ol>
       {% endfor %}
 
       <form action= "{{url_for('remove_resident')}}" method="post">
-        <p>Type name of roomie to remove and click 'submit':</p>
+        <br>
+        <br>
+        <br>
+        <h3>To remove a person from the house, <br> type their name in the text box and click 'submit':</h3>
         <input type="text" name="removeResident"></input>
         <button type="submit">Submit</button>
       </form>
