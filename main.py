@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_bootstrap import Bootstrap
 
 import house_controller, database, resident_controller
 
@@ -6,13 +7,20 @@ database.init_db()
 
 app = Flask(__name__)
 
+# bootstrap starter
+def create_app():
+  app = Flask(__name__)
+  Bootstrap(app)
+
+  return app
+
 
 # Setup routes - functions and routing related to the setup and configuration of the household
 
 @app.route('/')
 @app.route('/dashboard')
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("dashboard_bootstrap.html")
 
 @app.route('/setup')
 def setup_home():
@@ -64,7 +72,8 @@ def testpage():
 @app.route('/animalfeeder')
 def animalfeeder():
     pets_fed_today = database.getTodaysPetInfo()
-    return render_template('animalfeeder.html', pets=pets_fed_today)
+    pets_fed_week = database.getThisWeeksPetInfo()
+    return render_template('animalfeeder.html', today=pets_fed_today, week=pets_fed_week )
 
 @app.route('/animals_fedam', methods=['POST'])
 def animals_fedam():

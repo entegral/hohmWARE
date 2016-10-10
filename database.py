@@ -1,5 +1,5 @@
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import scoped_session, sessionmaker
 from models import Base, Zone, Resident, House, Pet
 import datetime
@@ -104,7 +104,13 @@ def addDataPoint(datapoint):
 def getTodaysPetInfo():
     current_date = datetime.datetime.utcnow()
     today = current_date - datetime.timedelta(days=1)
-    q = Pet.query.filter(Pet.date <= today).all()
+    q = Pet.query.filter(Pet.date >= today).order_by(desc(Pet.date)).all()
+    return q
+
+def getThisWeeksPetInfo():
+    current_date = datetime.datetime.utcnow()
+    today = current_date - datetime.timedelta(days=7)
+    q = Pet.query.filter(Pet.date >= today).order_by(desc(Pet.date)).all()
     return q
 
 def getAllPetInfo():
