@@ -29,7 +29,7 @@ def setup_home():
 @app.route('/setup_house')
 def setup_house():
     house_in_db = database.getAllHouses()
-    return render_template('setup_house.html', house=house_in_db)
+    return render_template('setup_house.html', houses=house_in_db)
 
 @app.route('/setup_resident')
 def setup_resident():
@@ -92,6 +92,11 @@ def animals_fedpm():
     todays_info[0].fed_pm = True
     database.db_session.commit()
     return redirect(url_for('animalfeeder'))
+
+@app.route('/chore_whore')
+def chore_whore_home():
+    return render_template('chore_whore.html')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
