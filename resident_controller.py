@@ -4,7 +4,7 @@ __author__ = "Brewski"
 import models, database, resident_view, house_controller
 
 
-import os, platform
+import os, platform, time
 
 def createNewResident(name, email, user_pin, phone, ip, mac):
 	role = "resident"
@@ -12,7 +12,7 @@ def createNewResident(name, email, user_pin, phone, ip, mac):
 	database.addResident(newResident)
 
 def createNewAdmin():
-	#need to finish this fucntion to add new residents and then make a function to delete them
+	#creates new admin of house
 	name = input('What is the name of the first resident?\n This resdent will be the house administrator.\n')
 	email = input('What is the email of this resident?\n')
 	user_pin = input('Please choose a pin number (4 digits).\n')
@@ -40,35 +40,37 @@ def residentsAtHome():
 
 	"""
 	get list of residents from the database and iterate through them checking
-	for their presence on the local network, based on their static IPs and a
+	for their presence on the local network, through use of static IPs and a
 	ping function. Returns a list of residents who are home.
 	"""
 
-	residents = database.returnAllResidents()
+	residents = database.getAllResidents()
 	residents_at_home = []
-	for resident in residents:								# ping resident IP and set alarm state if nobody is home
-		if ping(resident.ip) == True:						# set alarm state to OFF
+	for resident in residents:						# ping resident IP and set alarm state if nobody is home
+		if ping(resident.ip) == True:					# set alarm state to OFF
 			residents_at_home.append(resident.name)
 			time.sleep(0.01)
-		else:												# set alarm state to ON
-			time.sleep(3)
+		else:								# set alarm state to ON
+			time.sleep(5)
 			if ping(resident.ip) == True:
 				residents_at_home.append(resident.name)		# wait 60 seconds, then ping the IP again to confirm resident is gone, if so, break without adding to residents_at_home
-	if len(residents_at_home) > 0:
-		result = True
-	else:
-		result = False
-	return result
+	return residents_at_home
+	
 
 
-def ping(ipaddress):
-
+def ping(host):
     """
     Returns True if host responds to a ping request
     """
-
+    import os, platform
+    
     # Ping parameters as function of OS
-    ping_str = "-n 1" if  platform.system().lower()=="windows" else "-c 1"
+    if  platform.system().lower()=="windows":
+        ping_str = "-n"
+    else:
+        ping_str = "-c"
 
     # Ping
-    return os.system("ping " + ping_str + " " + ipaddress) == 0
+    return os.system("ping " + ping_str + " 1 " + host) == 0
+
+
