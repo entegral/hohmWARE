@@ -97,6 +97,13 @@ def animals_fedpm():
 def chore_whore_home():
     return render_template('chore_whore.html')
 
+@app.route('/add_chore')
+def add_chore():
+    return render_template('chore_whore.html')
+
+@app.route('/delete_chore')
+def delete_chore():
+    return render_template('chore_whore.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
