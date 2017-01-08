@@ -13,7 +13,7 @@ def ping(host):
         ping_str = "-c"
 
     # Ping
-    return os.system("ping " + ping_str + " 5 " + host) == 0
+    return os.system("ping " + ping_str + " 1 " + host) == 0
 
 
 ping("192.168.1.142")
