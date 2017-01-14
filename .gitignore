@@ -1,8 +1,8 @@
 homeware.db
 database.pyc
-
+venv
 11_env
-
+__pycache__
 .idea
 
 .idea/workspace.xml
