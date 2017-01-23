@@ -14,5 +14,5 @@ def send_sms(phone, note):
                                      body=note)
 
 phone = "+5416018751"
-body = "test biiiitch!"
-send_sms()
+note = "test biiiitch!"
+send_sms(phone, note)
